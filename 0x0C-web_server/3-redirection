@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Installs Nginx, listening on port 80
+# When querying Nginx at its root ''/'' with a GET request using ''curl''
+#       returns ''Hello World!''
+# ''redirect_me'' redirects to another predetermined page
+
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+
+# Granting permission to change files
+sudo chown -R "$USER" /etc/nginx/sites-available
+sudo chown -R "$USER" /var/www
+
+
+# Configuring the port and redirection
+echo "server {
+	listen 80;
+	listen [::]:80;
+	server_name servingweb.tech;
+	root /var/www/nginx/html;
+	index index.html;
+	location /redirect_me {
+		return 301 https://en.wikipedia.org/wiki/Nginx;
+    }
+}" > /etc/nginx/sites-available/default
+
+
+# Incoming HTTP fix
+sudo ufw allow 'Nginx HTTP'
+
+
+# Creating the string page
+sudo mkdir  /var/www/nginx/html/
+sudo touch /var/www/nginx/html/index.html
+
+
+# Adding the string
+echo "Hello World!" > /var/www/nginx/html/index.html
+
+
+# Testing configurations
+sudo nginx -t
+
+
+sudo service nginx restart
