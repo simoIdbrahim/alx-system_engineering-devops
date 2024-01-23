@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# server- web-02 login
-
-
-eval $("ssh-agenot")
-
-ssh-add ~/.ssh/school
-
-ssh ubuntu@54.90.7.176
