@@ -2,8 +2,8 @@
 """ script that, using this REST API, for a given employee ID,
 returns information about his/her todo list progress """
 
-import sys
 import requests
+import sys
 
 
 def gather_data_from_api(employee_id):
