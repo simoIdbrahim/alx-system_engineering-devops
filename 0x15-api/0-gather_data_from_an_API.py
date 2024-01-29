@@ -20,7 +20,7 @@ def gather_data_from_api(employee_id):
     employee_data = employee_response.json()
     employee_name = employee_data.get('name')
 
-    # Fetch todo list for the employee
+    # Fetch TODO list for the employee
     todo_url = "{}/todos".format(employee_url)
     todo_response = requests.get(todo_url)
 
