@@ -37,7 +37,9 @@ def gather_data_from_api(employee_id):
 
     # Display results
     print(
-        f"Employee {employee_name} is done with tasks({len(completed_tasks)}/{total_tasks}):")
+        f"Employee {employee_name} is done with tasks("
+        f"{len(completed_tasks)}/{total_tasks}):"
+    )
 
     for task in completed_tasks:
         print(f"\t {task.get('title')}")
