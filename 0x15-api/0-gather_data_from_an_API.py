@@ -36,7 +36,7 @@ def gather_data_from_api(employee_id):
     completed_tasks = [task for task in todo_list if task.get('completed')]
 
     # Display results
-    print(
+     print(
         f"Employee {employee_name} is done with tasks("
         f"{len(completed_tasks)}/{total_tasks}):"
     )
