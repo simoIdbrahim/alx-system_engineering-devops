@@ -6,27 +6,34 @@ import requests
 import sys
 
 
-if __name__ == '__main__':
-    emplId = sys.argv[1]
-    palceHolderData = "https://jsonplaceholder.typicode.com/users"
-    url = palceHolderData + "/" + emplId
+def get_employee_todo_progress(employee_id):
+    base_url = "https://jsonplaceholder.typicode.com"
+    
+    # Fetch user details
+    user_response = requests.get(f"{base_url}/users/{employee_id}")
+    user_data = user_response.json()
+    employee_name = user_data['name']
 
-    res = requests.get(url)
-    empName = res.json().get('name')
+    # Fetch user's TODO list
+    todos_response = requests.get(f"{base_url}/todos?userId={employee_id}")
+    todos_data = todos_response.json()
 
-    todoUrl = url + "/todos"
-    res = requests.get(todoUrl)
-    tasks = res.json()
-    done = 0
-    taskDone = []
+    # Calculate progress
+    total_tasks = len(todos_data)
+    done_tasks = sum(1 for todo in todos_data if todo['completed'])
 
-    for task in tasks:
-        if task.get('completed'):
-            taskDone.append(task)
-            done += 1
+    # Display information
+    print(f"Employee {employee_name} is done with tasks({done_tasks}/{total_tasks}):")
 
-    print("Employee {} is done with tasks({}/{}):"
-          .format(empName, done, len(tasks)))
+    # Display completed tasks
+    for todo in todos_data:
+        if todo['completed']:
+            print(f"\t {todo['title']}")
 
-    for task in taskDone:
-        print("\t {}".format(task.get('title')))
+if __name__ == "__main__":
+    if len(sys.argv) != 2 or not sys.argv[1].isdigit():
+        print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
+        sys.exit(1)
+
+    employee_id = int(sys.argv[1])
+    get_employee_todo_progress(employee_id)
