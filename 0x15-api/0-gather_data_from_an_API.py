@@ -25,8 +25,9 @@ def todo_list_progress():
             taskDone.append(task)
             done += 1
 
+    formatted_emp_name = " ".join(empName.split()[:2])
     print("Employee {} is done with tasks({}/{}):"
-          .format(empName, done, len(tasks)))
+          .format(formatted_emp_name, done, len(tasks)))
 
     for task in taskDone:
         print("\t {}".format(task.get('title')))
@@ -34,4 +35,3 @@ def todo_list_progress():
 
 if __name__ == '__main__':
     todo_list_progress()
-
