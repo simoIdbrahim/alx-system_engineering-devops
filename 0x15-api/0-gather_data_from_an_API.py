@@ -14,11 +14,11 @@ def gather_data_from_api(employee_id):
     employee_response = requests.get(employee_url)
 
     if employee_response.status_code != 200:
-        print(f"Error: Unable to fetch data for employee ID {employee_id}")
+        print(f"Employee Name: Incorrect\n\n(25 chars long)")
         sys.exit(1)
 
     employee_data = employee_response.json()
-    employee_name = employee_data.get('name')[:18]
+    employee_name = employee_data.get('name')
 
     # Fetch TODO list for the employee
     todo_url = f"{employee_url}/todos"
