@@ -4,23 +4,23 @@ import requests
 
 
 def recurse(subreddit, hot_list=[], after="", count=0):
-    """ return list title """
-    sub_info = requests.get("https://www.reddit.com/r/{}/hot.json"
+    """ return list of title """
+    information = requests.get("https://www.reddit.com/r/{}/hot.json"
                             .format(subreddit),
                             params={"count": count, "after": after},
                             headers={"User-Agent": "My-User-Agent"},
                             allow_redirects=False)
-    if sub_info.status_code >= 400:
+    if information.status_code >= 400:
         return None
 
-    hot_l = hot_list + [child.get("data").get("title")
-                        for child in sub_info.json()
+    hot = hot_list + [child.get("data").get("title")
+                        for child in information.json()
                         .get("data")
                         .get("children")]
 
-    info = sub_info.json()
+    info = information.json()
     if not info.get("data").get("after"):
-        return hot_l
+        return hot
 
-    return recurse(subreddit, hot_l, info.get("data").get("count"),
+    return recurse(subreddit, hot, info.get("data").get("count"),
                    info.get("data").get("after"))
